@@ -1,0 +1,17 @@
+meta {
+  name: putKey
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:8080/cache/val1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "value": "test"
+  }
+}
