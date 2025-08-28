@@ -1,7 +1,7 @@
 meta {
-  name: putKey
+  name: putKeyOlderTimestamp
   type: http
-  seq: 1
+  seq: 3
 }
 
 put {
@@ -12,7 +12,7 @@ put {
 
 body:json {
   {
-    "value": "test",
-    "timestamp": "2024-01-01T12:00:00Z"
+    "value": "older_value",
+    "timestamp": "2023-01-01T12:00:00Z"
   }
 }

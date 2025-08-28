@@ -1,5 +1,7 @@
 package com.minicache.app;
 
+import com.minicache.app.cluster.Cluster;
+import com.minicache.app.cluster.ClusterManager;
 import com.minicache.app.dto.PutCacheDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ class PeerReplicationServiceTest {
 
     @Test
     void testReplicatePutSendsToAllPeers() {
-        when(clusterManager.getPeers()).thenReturn(List.of("localhost:8081", "localhost:8082"));
+        when(clusterManager.getPeers()).thenReturn(List.of(new Cluster("localhost:8081"), new Cluster("localhost:8082")));
         peerReplicationService.replicatePut("foo", "bar");
         verify(restTemplate, times(1)).put(contains("localhost:8081"), any(HttpEntity.class));
         verify(restTemplate, times(1)).put(contains("localhost:8082"), any(HttpEntity.class));
@@ -49,7 +51,7 @@ class PeerReplicationServiceTest {
 
     @Test
     void testReplicateDeleteSendsToAllPeers() {
-        when(clusterManager.getPeers()).thenReturn(List.of("localhost:8081", "localhost:8082"));
+        when(clusterManager.getPeers()).thenReturn(List.of(new Cluster("localhost:8081"), new Cluster("localhost:8082")));
         peerReplicationService.replicateDelete("foo");
         verify(restTemplate, times(1)).delete(contains("localhost:8081"));
         verify(restTemplate, times(1)).delete(contains("localhost:8082"));
